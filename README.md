@@ -1,3 +1,3 @@
-# awp
+# avif_img
 
-wrap axum for easy use
+fix rust image can't load [./test.avif](./test.avif)
