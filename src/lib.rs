@@ -125,22 +125,27 @@ pub fn load_avif(bin: &[u8]) -> Result<DynamicImage> {
 }
 
 pub fn load_image(ext: Option<&str>, bin: &[u8]) -> Result<DynamicImage> {
+  let mut not_avifed = true;
   if let Some(ext) = ext {
     if ext == "avif" {
-      return load_avif(bin);
+      if let Ok(r) = load_avif(bin) {
+        return Ok(r);
+      }
+      not_avifed = false;
     }
     if let Some(format) = ImageFormat::from_extension(ext) {
-      if format == ImageFormat::Avif {
-        return load_avif(bin);
-      }
-      if let Ok(r) = image::load_from_memory_with_format(bin, format) {
-        return Ok(r);
+      if format != ImageFormat::Avif {
+        if let Ok(r) = image::load_from_memory_with_format(bin, format) {
+          return Ok(r);
+        }
       }
     }
   }
   let format = image::guess_format(bin)?;
-  if format == ImageFormat::Avif {
-    return load_avif(bin);
+  if format == ImageFormat::Avif && not_avifed {
+    if let Ok(r) = load_avif(bin) {
+      return Ok(r);
+    }
   }
   Ok(image::load_from_memory_with_format(bin, format)?)
 }
