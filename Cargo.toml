@@ -2,7 +2,10 @@
 name = "awp"
 version = "0.1.0"
 edition = "2021"
+license = "SSPL-1.0"
+homepage = "https://github.com/xxai-art/awp"
+repository = "https://github.com/xxai-art/awp.git"
+description = "wrap axum for easy use"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
