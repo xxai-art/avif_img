@@ -21,7 +21,7 @@ pub fn load_avif(bin: &[u8]) -> Result<DynamicImage> {
         li.push(px.b);
       }
       let img = ImageBuffer::<image::Rgb<u8>, Vec<u8>>::from_raw(width, height, li).unwrap();
-      return Ok(img.into());
+      Ok(img.into())
     }
     Image::RGB16(avif) => {
       //dbg!("RGB16");
@@ -35,7 +35,7 @@ pub fn load_avif(bin: &[u8]) -> Result<DynamicImage> {
         li.push((px.b >> 8) as u8);
       }
       let img = ImageBuffer::<image::Rgb<u8>, Vec<u8>>::from_raw(width, height, li).unwrap();
-      return Ok(img.into());
+      Ok(img.into())
     }
     Image::RGBA8(avif) => {
       //dbg!("RGBA8");
@@ -65,7 +65,7 @@ pub fn load_avif(bin: &[u8]) -> Result<DynamicImage> {
         }
       }
       let img = ImageBuffer::<image::Rgb<u8>, Vec<u8>>::from_raw(width, height, li).unwrap();
-      return Ok(img.into());
+      Ok(img.into())
     }
     Image::RGBA16(avif) => {
       //dbg!("RGBA16");
@@ -97,7 +97,7 @@ pub fn load_avif(bin: &[u8]) -> Result<DynamicImage> {
         }
       }
       let img = ImageBuffer::<image::Rgb<u8>, Vec<u8>>::from_raw(width, height, li).unwrap();
-      return Ok(img.into());
+      Ok(img.into())
     }
     _ => {
       todo!();
@@ -127,11 +127,11 @@ pub fn load_avif(bin: &[u8]) -> Result<DynamicImage> {
 pub fn load_image(ext: Option<&str>, bin: &[u8]) -> Result<DynamicImage> {
   if let Some(ext) = ext {
     if ext == "avif" {
-      return load_avif(&bin);
+      return load_avif(bin);
     }
     if let Some(format) = ImageFormat::from_extension(ext) {
       if format == ImageFormat::Avif {
-        return load_avif(&bin);
+        return load_avif(bin);
       }
       if let Ok(r) = image::load_from_memory_with_format(bin, format) {
         return Ok(r);
@@ -140,7 +140,7 @@ pub fn load_image(ext: Option<&str>, bin: &[u8]) -> Result<DynamicImage> {
   }
   let format = image::guess_format(bin)?;
   if format == ImageFormat::Avif {
-    return load_avif(&bin);
+    return load_avif(bin);
   }
   Ok(image::load_from_memory_with_format(bin, format)?)
 }
