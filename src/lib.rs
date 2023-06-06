@@ -1,5 +1,10 @@
 #![feature(impl_trait_in_assoc_type)]
-pub mod env;
-pub mod err;
-pub mod log;
-pub mod srv;
+mod env;
+mod err;
+mod log;
+mod srv;
+
+pub use env::env_default;
+pub use err::Err;
+pub use log::init;
+pub use srv::srv;
