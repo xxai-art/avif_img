@@ -3,6 +3,7 @@ use aom_decode::{
   avif::{Avif, Image},
   Config,
 };
+pub use image;
 use image::{DynamicImage, ImageBuffer, ImageFormat};
 
 pub fn load_avif(bin: &[u8]) -> Result<DynamicImage> {
